@@ -1,4 +1,4 @@
-from typing import List, Union
+from typing import List, Union, Any
 
 
 def recursive_factorial(n: int) -> int:
@@ -171,6 +171,39 @@ def tower_of_hanoi(
     return (tower_of_hanoi(n - 1, from_rod=from_rod, to_rod=through_road, through_road=to_rod) +
             f'{n} {from_rod}->{to_rod} ' +
             tower_of_hanoi(n - 1, from_rod=through_road, to_rod=to_rod, through_road=from_rod))
+
+
+def all_permutations(sequence: List[Any]) -> List[Any]:
+    """
+    Returns a list of all permutations of sequence elements.
+    The length of the sequence must be less than or equal to 10 (since the algorithm is factorial).
+    If the length of the sequence is greater than 10, it raise a ValueError.
+    For an empty sequence it returns an empty list.
+    >>> all_permutations([1,2,3])
+    [[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]]
+    >>> all_permutations([1])
+    [[1]]
+    >>> all_permutations([])
+    []
+    >>> all_permutations([0,1,2,3,4,5,6,7,8,9,10])
+    Traceback (most recent call last):
+        ...
+    ValueError: len(sequence) must be less than or equal to 10
+    """
+    if not sequence:
+        return []
+    elif len(sequence) > 10:
+        raise ValueError('len(sequence) must be less than or equal to 10')
+
+    if len(sequence) == 1:
+        return [sequence]
+    else:
+        res = []
+        for ind, elem in enumerate(sequence):
+            permutations = all_permutations(sequence[:ind] + sequence[ind+1:])
+            for permutation in permutations:
+                res.append([elem] + permutation)
+        return res
 
 
 if __name__ == "__main__":
