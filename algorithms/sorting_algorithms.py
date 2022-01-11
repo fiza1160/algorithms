@@ -138,19 +138,18 @@ def merge_sort(items: List[int]) -> List[int]:
 
         res = []
         ind_1 = ind_2 = 0
-        while len(res) < len(items):
-            if ind_1 < len(first_sorted_part) and ind_2 < len(second_sorted_part):
-                if first_sorted_part[ind_1] < second_sorted_part[ind_2]:
-                    res.append(first_sorted_part[ind_1])
-                    ind_1 += 1
-                else:
-                    res.append(second_sorted_part[ind_2])
-                    ind_2 += 1
+        while ind_1 < len(first_sorted_part) and ind_2 < len(second_sorted_part):
+            if first_sorted_part[ind_1] < second_sorted_part[ind_2]:
+                res.append(first_sorted_part[ind_1])
+                ind_1 += 1
+            else:
+                res.append(second_sorted_part[ind_2])
+                ind_2 += 1
 
-            if ind_1 == len(first_sorted_part):
-                res += second_sorted_part[ind_2:]
-            if ind_2 == len(second_sorted_part):
-                res += first_sorted_part[ind_1:]
+        if ind_1 == len(first_sorted_part):
+            res += second_sorted_part[ind_2:]
+        if ind_2 == len(second_sorted_part):
+            res += first_sorted_part[ind_1:]
 
         return res
 
