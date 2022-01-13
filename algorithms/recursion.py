@@ -76,35 +76,53 @@ def recursive_max(sequence: List[int]) -> Union[int, None]:
         return left_max if left_max > right_max else right_max
 
 
-def recursive_binary_search(sequence: List[int], elem: int) -> bool:
+def recursive_binary_search(
+        sequence: List[int],
+        elem: int,
+        start: Union[None, int] = None,
+        stop: Union[None, int] = None
+) -> int:
     """
     Searches for an element in the sequence.
-    If the element is in the sequence, it returns True.
-    If no element is found - returns False.
+    If the element is in the sequence, it returns the index of the element.
+    If there are several identical elements in the sequence, it returns the index of the first one.
+    If no element is found - returns -1.
     >>> recursive_binary_search([-3, -2, 1, 4, 7, 9, 12], 1)
-    True
+    2
     >>> recursive_binary_search([-3, -2, 1, 4, 7, 9, 12], 90)
-    False
+    -1
+    >>> recursive_binary_search([2,2,2,2], 2)
+    0
     >>> recursive_binary_search([1,2,2,2], 2)
-    True
+    1
     >>> recursive_binary_search([1,1,2,2], 2)
-    True
+    2
+    >>> recursive_binary_search([1,1,1,2], 2)
+    3
     >>> recursive_binary_search([1], 1)
-    True
+    0
     >>> recursive_binary_search([], 8)
-    False
+    -1
     """
-    if (not sequence
-            or len(sequence) == 1 and sequence[0] != elem):  # element not found
-        return False
+    start = start or 0
+    stop = stop or len(sequence)-1
 
-    middle = len(sequence) // 2
+    if (not sequence
+            or start>stop):  # element not found
+        return -1
+
+    middle = (start + stop) // 2
     if sequence[middle] == elem:
-        return True
+        for ind in range(middle, 0, -1):
+            prev_elem = sequence[ind-1]
+            if prev_elem != elem:
+                return ind
+        return 0 # So the sequence starts with the element
+
     elif sequence[middle] > elem:
-        return recursive_binary_search(sequence[:middle], elem)
+        return recursive_binary_search(sequence, elem, start=start, stop=middle-1)
     else:  # sequence[middle] < elem
-        return recursive_binary_search(sequence[middle:], elem)
+        return recursive_binary_search(sequence, elem, start=middle+1, stop=stop)
 
 
 def euclidean_algorithm(a: int, b: int) -> int:
