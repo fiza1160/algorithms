@@ -112,9 +112,7 @@ def counting_trajectories_with_forbidden_cells(n: int, forbidden_cells: Set[int]
     trajectories += [0] * (n - 4)
 
     for i in range(5, n + 1):
-        if i in forbidden_cells:
-            trajectories[i] = 0
-        else:
+        if i not in forbidden_cells:
             trajectories[i] = trajectories[i - 1] + trajectories[i - 2] + trajectories[i - 3]
 
     return trajectories[n]
