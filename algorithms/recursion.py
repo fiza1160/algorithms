@@ -1,4 +1,4 @@
-from typing import List, Union, Any
+from typing import List, Union, Any, Dict
 
 
 def recursive_factorial(n: int) -> int:
@@ -53,6 +53,50 @@ def recursive_fibonacci(n: int) -> int:
     return recursive_fibonacci(n - 1) + recursive_fibonacci(n - 2)
 
 
+def recursive_fibonacci_cache(
+        n: int
+) -> int:
+    """
+    Returns n-th Fibonacci number
+    n must be more than 0, otherwise it raise a ValueError.
+    >>> recursive_fibonacci_cache(0)
+    0
+    >>> recursive_fibonacci_cache(1)
+    1
+    >>> recursive_fibonacci_cache(2)
+    1
+    >>> recursive_fibonacci_cache(10)
+    55
+    >>> recursive_fibonacci_cache(-2)
+    Traceback (most recent call last):
+        ...
+    ValueError: n must be more or equal than 0
+    """
+    cache = {}
+
+    def _fib(_n):
+        if _n < 0:
+            raise ValueError('n must be more or equal than 0')
+
+        if _n == 0:
+            return 0
+        elif _n == 1:
+            return 1
+
+        if _n not in cache:
+            if _n - 1 not in cache:
+                cache[_n - 1] = _fib(_n - 1)
+
+            if _n - 2 not in cache:
+                cache[_n - 2] = _fib(_n - 2)
+
+            cache[_n] = cache[_n - 1] + cache[_n - 2]
+
+        return cache[_n]
+
+    return _fib(n)
+
+
 def recursive_max(sequence: List[int]) -> Union[int, None]:
     """
     Finds the maximal element in the sequence.
@@ -105,24 +149,24 @@ def recursive_binary_search(
     -1
     """
     start = start or 0
-    stop = stop or len(sequence)-1
+    stop = stop or len(sequence) - 1
 
     if (not sequence
-            or start>stop):  # element not found
+            or start > stop):  # element not found
         return -1
 
     middle = (start + stop) // 2
     if sequence[middle] == elem:
         for ind in range(middle, 0, -1):
-            prev_elem = sequence[ind-1]
+            prev_elem = sequence[ind - 1]
             if prev_elem != elem:
                 return ind
-        return 0 # So the sequence starts with the element
+        return 0  # So the sequence starts with the element
 
     elif sequence[middle] > elem:
-        return recursive_binary_search(sequence, elem, start=start, stop=middle-1)
+        return recursive_binary_search(sequence, elem, start=start, stop=middle - 1)
     else:  # sequence[middle] < elem
-        return recursive_binary_search(sequence, elem, start=middle+1, stop=stop)
+        return recursive_binary_search(sequence, elem, start=middle + 1, stop=stop)
 
 
 def euclidean_algorithm(a: int, b: int) -> int:
@@ -218,7 +262,7 @@ def all_permutations(sequence: List[Any]) -> List[Any]:
     else:
         res = []
         for ind, elem in enumerate(sequence):
-            permutations = all_permutations(sequence[:ind] + sequence[ind+1:])
+            permutations = all_permutations(sequence[:ind] + sequence[ind + 1:])
             for permutation in permutations:
                 res.append([elem] + permutation)
         return res
