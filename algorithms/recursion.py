@@ -1,10 +1,10 @@
-from typing import List, Union, Any, Dict
+from typing import List, Union, Any
 
 
 def recursive_factorial(n: int) -> int:
     """
     Calculates the factorial of a natural number.
-    If the number is less than 0, it raise a ValueError.
+    If the number is less than 0, it raises a ValueError.
 
     >>> recursive_factorial(0)
     1
@@ -58,7 +58,7 @@ def recursive_fibonacci_cache(
 ) -> int:
     """
     Returns n-th Fibonacci number
-    n must be more than 0, otherwise it raise a ValueError.
+    n must be more than 0, otherwise it raises a ValueError.
     >>> recursive_fibonacci_cache(0)
     0
     >>> recursive_fibonacci_cache(1)
@@ -172,7 +172,7 @@ def recursive_binary_search(
 def euclidean_algorithm(a: int, b: int) -> int:
     """
     Finds the greatest common divisor of two natural numbers.
-    If n or k is less than or equal to 0, it raise ValueError.
+    If n or k is less than or equal to 0, it raises ValueError.
     >>> euclidean_algorithm(6,9)
     3
     >>> euclidean_algorithm(8, 20)
@@ -239,7 +239,7 @@ def all_permutations(sequence: List[Any]) -> List[Any]:
     """
     Returns a list of all permutations of sequence elements.
     The length of the sequence must be less than or equal to 10 (since the algorithm is factorial).
-    If the length of the sequence is greater than 10, it raise a ValueError.
+    If the length of the sequence is greater than 10, it raises a ValueError.
     For an empty sequence it returns an empty list.
     >>> all_permutations([1,2,3])
     [[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]]

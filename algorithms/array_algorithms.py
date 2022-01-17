@@ -2,7 +2,7 @@ from typing import List, Union
 
 
 def find_k_largest(sequence: List[int], k: int = 1) -> Union[List[int], None]:
-    """Returns a sorted list of the k largest elements in the sequence of natural numbers.
+    """Returns a sorted list of the k-largest elements in the sequence of natural numbers.
     If k is greater than the length of the sequence, returns the sorted sequence.
     For an empty sequence returns empty list.
     For k<1 returns None
@@ -67,7 +67,7 @@ def sorting_by_counting(sequence: List[int]) -> List[int]:
     """
     Sorting by counting for a sequence of natural numbers.
     The elements of the sequence must not be less than 0 and not more than 100,
-    otherwise it raise a Value Error
+    otherwise it raises a Value Error
     Returns a new list with sorted elements.
     For an empty sequence returns an empty list.
 
@@ -123,8 +123,8 @@ def sieve_of_eratosthenes(n: int = 2) -> Union[List[int], None]:
     sieve[0] = sieve[1] = False  # 0 and 1 are not prime numbers
 
     for k in range(2, n + 1):
-        for l in range(k * 2, n + 1, k):
-            sieve[l] = False
+        for i in range(k * 2, n + 1, k):
+            sieve[i] = False
 
     res = []
     for number in range(len(sieve)):
