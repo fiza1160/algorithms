@@ -142,9 +142,11 @@ def count_min_cost(n: int, prices: Dict[int, int]) -> Tuple[int, List[int]]:
     if n <= 1:
         return prices.get(1, 0), [1]
 
-    trajectories = [(0, [0])]
-    trajectories.append((prices.get(1, 0), [1]))
-    trajectories.append((prices.get(2, 0) + trajectories[1][0], [1, 2]))
+    trajectories = [
+        (0, [0]),
+        (prices.get(1, 0), [1]),
+        (prices.get(2, 0) + prices.get(1, 0), [1, 2])
+    ]
     min_cost_trajectory = min(trajectories[1], trajectories[2])
     trajectories.append((min_cost_trajectory[0] + prices.get(3, 0), min_cost_trajectory[1] + [3]))
 
