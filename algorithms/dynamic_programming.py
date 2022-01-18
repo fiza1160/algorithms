@@ -29,26 +29,26 @@ def fibonacci(n: int) -> int:
     return fib[n]
 
 
-def counting_trajectories(n: int) -> int:
+def count_trajectories(n: int) -> int:
     """
     The Grasshopper is in position 1.
     The Grasshopper may jump to +1, +2 or +3.
     How many possible trajectories does the grasshopper have to get to position n?
     If n<=1, consider that the Grasshopper has 0 possible trajectory.
 
-    >>> counting_trajectories(0)
+    >>> count_trajectories(0)
     0
-    >>> counting_trajectories(1)
+    >>> count_trajectories(1)
     0
-    >>> counting_trajectories(2)
+    >>> count_trajectories(2)
     1
-    >>> counting_trajectories(3)
+    >>> count_trajectories(3)
     2
-    >>> counting_trajectories(4)
+    >>> count_trajectories(4)
     3
-    >>> counting_trajectories(7)
+    >>> count_trajectories(7)
     20
-    >>> counting_trajectories(-3)
+    >>> count_trajectories(-3)
     0
     """
     if n <= 1:
@@ -62,7 +62,7 @@ def counting_trajectories(n: int) -> int:
     return trajectories[n]
 
 
-def counting_trajectories_with_forbidden_cells(n: int, forbidden_cells: Set[int]) -> int:
+def count_trajectories_with_forbidden_cells(n: int, forbidden_cells: Set[int]) -> int:
     """
     The Grasshopper is in position 1.
     The Grasshopper may jump to +1, +2 or +3.
@@ -71,31 +71,31 @@ def counting_trajectories_with_forbidden_cells(n: int, forbidden_cells: Set[int]
     If n<=1, consider that the Grasshopper has 0 possible trajectory.
     If 1 is forbidden, consider that the Grasshopper has 0 possible trajectory.
 
-    >>> counting_trajectories_with_forbidden_cells(0, set())
+    >>> count_trajectories_with_forbidden_cells(0, set())
     0
-    >>> counting_trajectories_with_forbidden_cells(1, set())
+    >>> count_trajectories_with_forbidden_cells(1, set())
     0
-    >>> counting_trajectories_with_forbidden_cells(2, set())
+    >>> count_trajectories_with_forbidden_cells(2, set())
     1
-    >>> counting_trajectories_with_forbidden_cells(3, set())
+    >>> count_trajectories_with_forbidden_cells(3, set())
     2
-    >>> counting_trajectories_with_forbidden_cells(4, set())
+    >>> count_trajectories_with_forbidden_cells(4, set())
     3
-    >>> counting_trajectories_with_forbidden_cells(4, {2})
+    >>> count_trajectories_with_forbidden_cells(4, {2})
     2
-    >>> counting_trajectories_with_forbidden_cells(4, {3})
+    >>> count_trajectories_with_forbidden_cells(4, {3})
     2
-    >>> counting_trajectories_with_forbidden_cells(4, {4})
+    >>> count_trajectories_with_forbidden_cells(4, {4})
     0
-    >>> counting_trajectories_with_forbidden_cells(9, {2,6,7})
+    >>> count_trajectories_with_forbidden_cells(9, {2,6,7})
     3
-    >>> counting_trajectories_with_forbidden_cells(12, {3,6,7,10})
+    >>> count_trajectories_with_forbidden_cells(12, {3,6,7,10})
     9
-    >>> counting_trajectories_with_forbidden_cells(8, {5})
+    >>> count_trajectories_with_forbidden_cells(8, {5})
     13
-    >>> counting_trajectories_with_forbidden_cells(8, {1})
+    >>> count_trajectories_with_forbidden_cells(8, {1})
     0
-    >>> counting_trajectories_with_forbidden_cells(-3, set())
+    >>> count_trajectories_with_forbidden_cells(-3, set())
     0
     """
     if n <= 1 or 1 in forbidden_cells:
