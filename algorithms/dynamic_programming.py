@@ -1,4 +1,4 @@
-from typing import Set
+from typing import Set, List, Tuple, Dict
 
 
 def fibonacci(n: int) -> int:
@@ -114,6 +114,43 @@ def count_trajectories_with_forbidden_cells(n: int, forbidden_cells: Set[int]) -
     for i in range(5, n + 1):
         if i not in forbidden_cells:
             trajectories[i] = trajectories[i - 1] + trajectories[i - 2] + trajectories[i - 3]
+
+    return trajectories[n]
+
+
+def count_min_cost(n: int, prices: Dict[int, int]) -> Tuple[int, List[int]]:
+    """The Grasshopper is in position 1.
+    The Grasshopper may jump to +1, +2 or +3.
+    The function returns the tuple with the lowest cost to reach n and with a list of points to visit.
+    The function gets a dict of visit prices for each point.
+    If there is no value in the prices for the desired point, it is assumed that the visiting price is 0.
+    If there are several trajectories with minimal cost, it returns any of them.
+    If n<0, it is considered that the Grasshopper could have visited only the first point.
+
+    >>> count_min_cost(11, {1:1, 2:2, 3:1, 4:3, 5:1, 6:1, 7:2, 8:3, 9:3, 10:2, 11:1})
+    (7, [1, 3, 5, 8, 11])
+    >>> count_min_cost(-2, {1:2, 2:1, 3:2, 4:1})
+    (2, [1])
+    >>> count_min_cost(6, {2:2, 3:2, 5:1})
+    (0, [1, 4, 6])
+    >>> count_min_cost(6, {1:3, 2:-5, 3:1, 4:-3, 5:5, 6:1})
+    (-4, [1, 2, 4, 6])
+    >>> count_min_cost(5, {})
+    (0, [1, 2, 5])
+    """
+
+    if n <= 1:
+        return prices.get(1, 0), [1]
+
+    trajectories = [(0, [0])]
+    trajectories.append((prices.get(1, 0), [1]))
+    trajectories.append((prices.get(2, 0) + trajectories[1][0], [1, 2]))
+    min_cost_trajectory = min(trajectories[1], trajectories[2])
+    trajectories.append((min_cost_trajectory[0] + prices.get(3, 0), min_cost_trajectory[1] + [3]))
+
+    for i in range(4, n+1):
+        min_cost_trajectory = min(trajectories[i-1], trajectories[i-2], trajectories[i-3])
+        trajectories.append((min_cost_trajectory[0] + prices.get(i, 0), min_cost_trajectory[1] + [i]))
 
     return trajectories[n]
 
