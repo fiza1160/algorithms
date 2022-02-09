@@ -157,6 +157,59 @@ def count_min_cost(n: int, prices: Dict[int, int]) -> Tuple[int, List[int]]:
     return trajectories[n]
 
 
+def largest_common_subsequence(sequence_1: List[int], sequence_2:List[int]) -> int:
+    """
+    For two p-sequences of numbers it returns the length of the largest common subsequence.
+    If there is no common subsequence, it returns 0.
+
+    Note: a subsequence is not a substring.
+    For sequence 1,2,3,4,5 the sequence 1,3,5 is a subsequence (although it is not a substring).
+    >>> largest_common_subsequence([1,2,3,4,5],[1,2,3,4,5])
+    5
+    >>> largest_common_subsequence([1,2,3,4,5],[4,8,1,2,3,4,6,9])
+    4
+    >>> largest_common_subsequence([0,3,6,1,2,3,8,9],[1,2,3,4,5])
+    3
+    >>> largest_common_subsequence([1,2,0,3,4,5],[1,2,3,4,5])
+    5
+    >>> largest_common_subsequence([1,2,3,0,5],[1,2,3,4,5])
+    4
+    >>> largest_common_subsequence([1,2,3,4,5],[6,7,8,9])
+    0
+    >>> largest_common_subsequence([],[1,2,3,4,5])
+    0
+    """
+
+    res = [[0]*(len(sequence_2)+1) for _ in range(len(sequence_1)+1)]
+
+    for i in range(1, len(sequence_1)+1):
+        for j in range(1, len(sequence_2)+1):
+            if sequence_1[i-1] == sequence_2[j-1]:
+                res[i][j] = 1 + res[i-1][j-1]
+            else:
+                res[i][j] = max(res[i-1][j], res[i][j-1])
+
+    return res[-1][-1]
+
+
+def largest_increasing_subsequence(sequence: List[int]) -> int:
+    """
+    Returns the length of the longest increasing subsequence.
+    Note: a subsequence is not a substring.
+    For sequence 2,0,3,1,5 the sequence 2,3,5 is a subsequence (although it is not a substring).
+
+    >>> largest_increasing_subsequence([2,0,3,1,5])
+    3
+    >>> largest_increasing_subsequence([5,4,3,2,1])
+    1
+    >>> largest_increasing_subsequence([5,10,6,12,3,24,7,8])
+    4
+    >>> largest_increasing_subsequence([])
+    0
+    """
+    return largest_common_subsequence(sequence_1=sequence, sequence_2=sorted(sequence))
+
+
 if __name__ == "__main__":
     import doctest
 
